@@ -43,14 +43,15 @@ app.post("/campgrounds", function(req, res) {
     // Get data from form and add to campgrounds array
     var name = req.body.name;
     var image = req.body.image;
-    var newCampground = {name: name, image: image};
+    var desc = req.body.description;
+    var newCampground = {name: name, image: image, description: desc};
     // Create a new campground and save to DB
     Campground.create(newCampground, function(err, newlyCreated){
         if (err) {
             console.log(err);
         } else {
             // Redirect back to campgrounds page
-            res.redirect("index");
+            res.redirect("/campgrounds");
         }
     });
 });
@@ -63,8 +64,14 @@ app.get("/campgrounds/new", function(req, res) {
 // SHOW route - shows more info about one campground
 app.get("/campgrounds/:id", function(req, res) {
     // find the campground with provided ID
-    // Render show template
-    res.render("show");
+    Campground.findById(req.params.id, function(err, foundCampground) {
+        if (err) {
+            console.log(err);
+        } else {
+            // Render show template
+            res.render("show", {campground: foundCampground});
+        }
+    });
 });
 
 
