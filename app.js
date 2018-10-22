@@ -1,16 +1,31 @@
-var express     = require("express"),
-    app         = express(),
-    bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose"),
-    Campground  = require("./models/campground"),
-    Comment     = require("./models/comment"),
-    seedDB      = require("./seeds");
-
-seedDB();
+var express         = require("express"),
+    app             = express(),
+    bodyParser      = require("body-parser"),
+    mongoose        = require("mongoose"),
+    passport        = require("passport"),
+    LocalStrategy   = require("passport-local"),
+    Campground      = require("./models/campground"),
+    Comment         = require("./models/comment"),
+    User            = require("./models/user"),
+    seedDB          = require("./seeds");
+    
 mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
+seedDB();
+
+// PASSPORT CONGIFURATION
+app.use(require("express-session")({
+    secret: "YelpCamp is the number one website for camping",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // INDEX route - show all campgrounds
 app.get("/", function(req, res) {
@@ -46,7 +61,7 @@ app.post("/campgrounds", function(req, res) {
     });
 });
 
-// Get Request to /campgrounds/new
+// GET requests to /campgrounds/new
 app.get("/campgrounds/new", function(req, res) {
     res.render("campgrounds/new");
 });
@@ -65,10 +80,11 @@ app.get("/campgrounds/:id", function(req, res) {
     });
 });
 
-// ================
-// COMMENTS ROUTES
-// ================
+// ================================================================
+// ==============           COMMENTS ROUTES       =================
+// ================================================================
 
+// GET route to new comments page 
 app.get("/campgrounds/:id/comments/new", function(req, res) {
     Campground.findById(req.params.id, function(err, campground) {
         if(err) {
@@ -79,6 +95,7 @@ app.get("/campgrounds/:id/comments/new", function(req, res) {
     });
 });
 
+// POST route to add comments
 app.post("/campgrounds/:id/comments", function(req, res) {
     // lookup campground using ID
     Campground.findById(req.params.id, function(err, campground) {
@@ -102,7 +119,29 @@ app.post("/campgrounds/:id/comments", function(req, res) {
     });
 });
 
-// Fires up the app
+// ================================================================
+// ==============           AUTH ROUTES       =====================
+// ================================================================
+
+// Show register form
+app.get("/register", function(req, res) {
+    res.render("register");
+});
+// Signup logic
+app.post("/register", function(req, res) {
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, function() {
+           res.redirect("/campgrounds"); 
+        });
+    });
+});
+
+//================== Fire up the app! ===================
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Yelp Camp has Started");
 });
