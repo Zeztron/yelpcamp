@@ -9,6 +9,7 @@ var express     = require("express"),
 seedDB();
 mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 // INDEX route - show all campgrounds
@@ -86,7 +87,6 @@ app.post("/campgrounds/:id/comments", function(req, res) {
            res.redirect("/campgrounds");
        } else {
             // create new comment
-            console.log(req.body.comment);
             Comment.create(req.body.comment, function(err, comment) {
                 if (err) {
                     console.log(err);
@@ -101,7 +101,6 @@ app.post("/campgrounds/:id/comments", function(req, res) {
        }
     });
 });
-
 
 // Fires up the app
 app.listen(process.env.PORT, process.env.IP, function() {
