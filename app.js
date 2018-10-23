@@ -85,7 +85,7 @@ app.get("/campgrounds/:id", function(req, res) {
 // ================================================================
 
 // GET route to new comments page 
-app.get("/campgrounds/:id/comments/new", function(req, res) {
+app.get("/campgrounds/:id/comments/new", isLoggedIn, function(req, res) {
     Campground.findById(req.params.id, function(err, campground) {
         if(err) {
             console.log(err);
@@ -96,7 +96,7 @@ app.get("/campgrounds/:id/comments/new", function(req, res) {
 });
 
 // POST route to add comments
-app.post("/campgrounds/:id/comments", function(req, res) {
+app.post("/campgrounds/:id/comments", isLoggedIn, function(req, res) {
     // lookup campground using ID
     Campground.findById(req.params.id, function(err, campground) {
        if (err) {
@@ -145,7 +145,7 @@ app.post("/register", function(req, res) {
 app.get("/login", function(req, res) {
     res.render("login");
 });
-// Login login
+// Login logic
 app.post("/login", passport.authenticate("local",
     {
         successRedirect: "/campgrounds",
@@ -153,6 +153,19 @@ app.post("/login", passport.authenticate("local",
         
     }), function(req, res) {
 });
+
+// logout route
+app.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/campgrounds");
+});
+
+function isLoggedIn(req, res, next){
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
 
 //================== Fire up the app! ===================
 app.listen(process.env.PORT, process.env.IP, function() {
