@@ -7,7 +7,7 @@ router.get("/campgrounds", function(req, res) {
         if(err){
             console.log(err);
         } else {
-            res.render("campgrounds/index", {campgrounds: allCampgrounds});
+            res.render("campgrounds/index", {campgrounds: allCampgrounds, currentUser: req.user});
         }
     });
 });
@@ -31,12 +31,12 @@ router.post("/campgrounds", function(req, res) {
 });
 
 // GET requests to /campgrounds/new
-router.get("/campgrounds/new", function(req, res) {
+router.get("/campgrounds/new", isLoggedIn, function(req, res) {
     res.render("campgrounds/new");
 });
 
 // SHOW route - shows more info about one campground
-router.get("/campgrounds/:id", function(req, res) {
+router.get("/campgrounds/:id", isLoggedIn, function(req, res) {
     // find the campground with provided ID
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
         if (err) {
@@ -48,5 +48,14 @@ router.get("/campgrounds/:id", function(req, res) {
         }
     });
 });
+
+// Middleware
+function isLoggedIn(req, res, next){
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
+
 
 module.exports = router;

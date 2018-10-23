@@ -27,7 +27,7 @@ function seedDB(){
             console.log(err);
         }
         console.log("removed campgrounds!");
-        // Adding campgrounds
+        //Adding campgrounds
         data.forEach(function(seed) {
             Campground.create(seed, function(err, campground) {
                 if (err) {
@@ -41,11 +41,11 @@ function seedDB(){
                             author: "Homer"
                         }, function(err, comment) {
                             if (err) {
-                                console.log(err)
+                                console.log(err);
                             } else {
                                 campground.comments.push(comment);
                                 campground.save();
-                                console.log("Created new comment")
+                                console.log("Created new comment");
                             }
                         });
                 }
