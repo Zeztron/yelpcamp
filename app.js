@@ -40,7 +40,6 @@ app.use(indexRoutes);
 app.use(commentRoutes);
 app.use(campgroundRoutes);
 
-
 //================== Fire up the app! ===================
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Yelp Camp has Started");
