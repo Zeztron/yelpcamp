@@ -18,6 +18,7 @@
                     <p><%= campground.description %></p>
                     <p>
                         <em>Submitted By <%= campground.author.username %></em>
+                        <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
                     </p>
                 </div>
             </div>
