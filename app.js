@@ -4,6 +4,7 @@ var express         = require("express"),
     mongoose        = require("mongoose"),
     flash           = require("connect-flash"),
     passport        = require("passport"),
+    cookieParser    = requite("cookie-parser"),
     LocalStrategy   = require("passport-local"),
     methodOverride  = require("method-override"),
     Campground      = require("./models/campground"),
@@ -11,12 +12,22 @@ var express         = require("express"),
     User            = require("./models/user"),
     seedDB          = require("./seeds");
 
+require('dotenv').load()
+
 // Requiring routes
 var commentRoutes       = require("./routes/comments"),
     campgroundRoutes    = require("./routes/campgrounds"),
     indexRoutes         = require("./routes/index");
-    
-mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true });
+
+mongoose.Promise = global.Promise;
+
+const databaseUri = process.env.MONGODB_URI || 'mongodb://localhost/yelp_camp';
+
+mongoose.connect(databaseUri, { useMongoClient: true })
+      .then(() => console.log(`Database connected`))
+      .catch(err => console.log(`Database connection error: ${err.message}`));
+
+mongoose.connect(databaseUri, { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
