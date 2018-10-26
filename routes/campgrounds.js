@@ -77,14 +77,22 @@ router.get("/campgrounds/:id/edit", middleware.checkCampgroundOwnership, functio
     });
 });
 // Update
-router.put("/campgrounds/:id", middleware.checkCampgroundOwnership, function(req, res) {
-    Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampgrounnd) {
-        if (err) {
-            res.redirect("/campgrounds");
+router.put("/campgrounds/:id", isSafe, function(req, res){
+    geocoder.geocode(req.body.location, function (err, data) {
+    var lat = data.results[0].geometry.location.lat;
+    var lng = data.results[0].geometry.location.lng;
+    var location = data.results[0].formatted_address;
+    var newData = {name: req.body.name, image: req.body.image, description: req.body.description, cost: req.body.price, location: location, lat: lat, lng: lng};
+    Campground.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, campground){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("back");
         } else {
-            res.redirect("/campgrounds/" + req.params.id);
+            req.flash("success","Successfully Updated!");
+            res.redirect("/campgrounds/" + campground._id);
         }
     });
+  });
 });
 // Destroy
 router.delete("/campgrounds/:id", middleware.checkCampgroundOwnership, function(req, res) {
