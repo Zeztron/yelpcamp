@@ -71,7 +71,7 @@ router.get("/campgrounds/:id", function(req, res) {
 });
 
 // Edit
-router.get("/campgrounds/:id/edit", middleware.checkCampgroundOwnership, function(req, res) {
+router.get("/campgrounds/:id/edit", middleware.isLoggedIn, middleware.checkCampgroundOwnership, function(req, res) {
     Campground.findById(req.params.id, function(err, foundCampground) {
         res.render("campgrounds/edit", {campground: foundCampground, currentUser: req.user});
     });
@@ -95,7 +95,7 @@ router.put("/campgrounds/:id", isSafe, function(req, res){
   });
 });
 // Destroy
-router.delete("/campgrounds/:id", middleware.checkCampgroundOwnership, function(req, res) {
+router.delete("/campgrounds/:id", middleware.isLoggedIn, middleware.checkCampgroundOwnership, function(req, res) {
     Campground.findByIdAndRemove(req.params.id, function(err) {
         if (err) {
             res.redirect("/campgrounds");

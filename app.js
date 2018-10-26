@@ -4,7 +4,7 @@ var express         = require("express"),
     mongoose        = require("mongoose"),
     flash           = require("connect-flash"),
     passport        = require("passport"),
-    cookieParser    = requite("cookie-parser"),
+    cookieParser    = require("cookie-parser"),
     LocalStrategy   = require("passport-local"),
     methodOverride  = require("method-override"),
     Campground      = require("./models/campground"),
@@ -20,14 +20,12 @@ var commentRoutes       = require("./routes/comments"),
     indexRoutes         = require("./routes/index");
 
 mongoose.Promise = global.Promise;
-
 const databaseUri = process.env.MONGODB_URI || 'mongodb://localhost/yelp_camp';
 
-mongoose.connect(databaseUri, { useMongoClient: true })
+mongoose.connect(databaseUri, { newUrlParser: true })
       .then(() => console.log(`Database connected`))
       .catch(err => console.log(`Database connection error: ${err.message}`));
 
-mongoose.connect(databaseUri, { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
