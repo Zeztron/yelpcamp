@@ -2,7 +2,7 @@
 
 ![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
 
-[![Known Vulnerabilities](https://snyk.io/test/github/zeztron/yelpcamp/badge.svg?style=plastic)](https://snyk.io/test/github/zeztron/yelpcamp)
+[![Known Vulnerabilities](https://snyk.io/test/github/zeztron/yelpcamp/badge.svg)](https://snyk.io/test/github/zeztron/yelpcamp)
 
 
 > A web application project from the Udemy course - [The Web Developer Bootcamp by Colt Steele](https://www.udemy.com/the-web-developer-bootcamp/)
