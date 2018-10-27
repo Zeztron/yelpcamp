@@ -5,8 +5,6 @@
 
 > A web application project from the Udemy course - [The Web Developer Bootcamp by Colt Steele](https://www.udemy.com/the-web-developer-bootcamp/)
 
-![Uploading Screen Shot 2018-10-26 at 9.56.34 PM.png…]()
-
 ## Live Demo
 
 To see the app in action, go to [https://yelp-camp-hp.herokuapp.com/](https://yelp-camp-hp.herokuapp.com/)
