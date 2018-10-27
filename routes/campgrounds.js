@@ -3,7 +3,7 @@ var router = express.Router();
 var Campground = require("../models/campground");
 var middleware = require("../middleware");
 var geocoder = require('geocoder');
-var { isLoggedIn, checkCampgroundOwnership, checkCommentOwnership, isAdmin, isSafe } = middleware;
+
 
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -77,7 +77,7 @@ router.get("/campgrounds/:id/edit", middleware.isLoggedIn, middleware.checkCampg
     });
 });
 // Update
-router.put("/campgrounds/:id", isSafe, function(req, res){
+router.put("/campgrounds/:id", middleware.isSafe, function(req, res){
     geocoder.geocode(req.body.location, function (err, data) {
     var lat = data.results[0].geometry.location.lat;
     var lng = data.results[0].geometry.location.lng;
