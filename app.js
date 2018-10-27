@@ -19,12 +19,8 @@ var commentRoutes       = require("./routes/comments"),
     campgroundRoutes    = require("./routes/campgrounds"),
     indexRoutes         = require("./routes/index");
 
-mongoose.Promise = global.Promise;
-const databaseUri = process.env.MONGODB_URI || 'mongodb://localhost/yelp_camp';
-
-mongoose.connect(databaseUri, { useNewUrlParser: true })
-      .then(() => console.log(`Database connected`))
-      .catch(err => console.log(`Database connection error: ${err.message}`));
+//mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true });
+mongoose.connect("mongodb://harsh:zeztron1994@ds237735.mlab.com:37735/yelcamp", { useNewUrlParser: true });
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
