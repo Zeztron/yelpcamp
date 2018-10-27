@@ -13,6 +13,8 @@ To see the app in action, go to [https://yelp-camp-hp.herokuapp.com/](https://ye
 
 ## Features
 
+<img width="1098" alt="screen shot 2018-10-26 at 9 59 59 pm" src="https://user-images.githubusercontent.com/41349472/47598506-7fe0cd80-d96a-11e8-9d7d-a1ff8a358fcd.png">
+
 * Authentication:
   
   * User login with username and password
