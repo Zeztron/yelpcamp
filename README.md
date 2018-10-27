@@ -1,4 +1,7 @@
 # YelpCamp!
+
+![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+
 [![Known Vulnerabilities](https://snyk.io/test/github/zeztron/yelpcamp/badge.svg?style=plastic)](https://snyk.io/test/github/zeztron/yelpcamp)
 
 
