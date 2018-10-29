@@ -23,7 +23,6 @@ router.get("/campgrounds", function(req, res) {
 router.post("/campgrounds", middleware.isLoggedIn, function(req, res) {
     // Get data from form and add to campgrounds array
     var name = req.body.name;
-    var price = req.body.price;
     var image = req.body.image;
     var desc = req.body.description;
     var author = {
@@ -31,26 +30,27 @@ router.post("/campgrounds", middleware.isLoggedIn, function(req, res) {
         username: req.user.username
     };
     var cost = req.body.cost;
-    geocoder.geocode(req.body.location, function (err, data) {
-        if (err || data.status === 'ZERO_RESULTS') {
-            req.flash('error', 'Invalid address');
-            return res.redirect('back');
+    // geocoder.geocode(req.body.location, function (err, data) {
+    //     if (err || data.status === 'ZERO_RESULTS') {
+    //         req.flash('error', 'Invalid address');
+    //         return res.redirect('back');
+    //     }
+    //     var lat = data.results[0].geometry.location.lat;
+    //     var lng = data.results[0].geometry.location.lng;
+    //     var location = data.results[0].formatted_address;
+    var newCampground = {name: name, image: image, description: desc, author: author, cost: cost};
+    // , location: location, lat: lat, lng: lng};
+    // // Create a new campground and save to DB
+    Campground.create(newCampground, function(err, newlyCreated){
+        if (err) {
+            console.log(err);
+        } else {
+        // Redirect back to campgrounds page
+            res.redirect("/campgrounds");//, {campgrounds: newlyCreated, currentUser: req.user});
         }
-        var lat = data.results[0].geometry.location.lat;
-        var lng = data.results[0].geometry.location.lng;
-        var location = data.results[0].formatted_address;
-        var newCampground = {name: name, price: price, image: image, description: desc, author: author, location: location, lat: lat, lng: lng};
-    // Create a new campground and save to DB
-        Campground.create(newCampground, function(err, newlyCreated){
-            if (err) {
-                console.log(err);
-            } else {
-            // Redirect back to campgrounds page
-                res.redirect("/campgrounds", {campgrounds: newlyCreated, currentUser: req.user});
-            }
-        });
     });
 });
+// });
 
 // GET requests to /campgrounds/new
 router.get("/campgrounds/new", middleware.isLoggedIn, function(req, res) {
