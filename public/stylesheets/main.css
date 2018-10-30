@@ -85,3 +85,9 @@ span .align-bottom {
 .delete-form {
   display: inline;
 }
+
+/* Google Maps */
+#map {
+    height: 400px;
+    width: 100%;
+}

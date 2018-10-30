@@ -17,7 +17,8 @@ require('dotenv').load()
 // Requiring routes
 var commentRoutes       = require("./routes/comments"),
     campgroundRoutes    = require("./routes/campgrounds"),
-    indexRoutes         = require("./routes/index");
+    indexRoutes         = require("./routes/index"),
+    passwordRoutes      = require("./routes/password");
 
 //mongoose.connect((process.env.DATABASEURL), { useNewUrlParser: true });
 mongoose.connect("mongodb://harsh:zeztron1994@ds237735.mlab.com:37735/yelcamp", { useNewUrlParser: true });
@@ -49,6 +50,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(indexRoutes);
 app.use(commentRoutes);
 app.use(campgroundRoutes);
+app.use(passwordRoutes);
 
 //================== Fire up the app! ===================
 app.listen(process.env.PORT, process.env.IP, function() {

@@ -11,6 +11,32 @@ body {
 
 #landing-header h1 {
   color: #fff;
+  margin: 0.5em auto;
+}
+
+.entryLink {
+  color: #fff;
+  opacity: 1;
+}
+
+
+.entryLink:hover {
+  color: #fff;
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+.entryLink:focus {
+  color: #fff;
+  opacity: 0.8;
+  outline: 0;
+  text-decoration: none;
+}
+
+.entryLink:visited {
+  color: #fff;
+  opacity: 1;
+  text-decoration: none;
 }
 
 .slideshow li { 
