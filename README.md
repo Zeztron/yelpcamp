@@ -34,8 +34,6 @@ To see the app in action, go to [https://yelp-camp-hp.herokuapp.com/](https://ye
   * Create, edit and delete posts and comments
 
   * Upload campground photos
-
-  * Display campground location on Google Maps
   
   * Search existing campgrounds
 
@@ -52,10 +50,6 @@ To see the app in action, go to [https://yelp-camp-hp.herokuapp.com/](https://ye
 * Update campground photos when editing campgrounds
 
 * Update personal information on profile page
-
-* Improve image load time on the landing page using Cloudinary
-
-* Use Helmet to strengthen security
  
 ## Getting Started
 
