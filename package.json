@@ -25,7 +25,7 @@
     "locus": "^2.0.1",
     "method-override": "^3.0.0",
     "moment": "^2.22.2",
-    "nodemailer": "^6.6.1",
+    "nodemailer": "^7.0.7",
     "mongoose": "^6.0.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
